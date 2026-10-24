@@ -23,6 +23,6 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
 // --- Вспомогательные оси ---
-//scene.add(new THREE.AxesHelper(3));
+scene.add(new THREE.AxesHelper(3));
 
 export { scene, THREE, controls, camera, renderer }
