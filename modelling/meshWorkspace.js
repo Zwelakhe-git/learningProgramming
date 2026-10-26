@@ -1,23 +1,35 @@
 import { THREE, scene } from "./init_scene.js";
-import { rotate_mesh } from "./rotatingAMesh.js";
-import { resize_mesh } from "./resizeMesh.js";
+import { translateMesh } from "./translateMesh.js";
 
-const circle = new THREE.Mesh(
-    new THREE.CircleGeometry(5, 64),
+const point = new THREE.Mesh(
+    new THREE.SphereGeometry(0.15, 16, 16),
     new THREE.MeshBasicMaterial({
-        wireframe: true,
-        color: 0xffffff
+        color: 0xf39316
     })
 );
 
-circle.position.set(0, 0, 0);
-circle.castShadow = true;
-circle.receiveShadow = true;
-scene.add(circle)
+const position = new THREE.Vector3(3, 2, 5);
+const angle = Math.random() * Math.PI * 2;
+const elevationAngle = (Math.random() - 0.5) * Math.PI;
+
+const direction = new THREE.Vector3(
+    Math.cos(angle) * Math.cos(elevationAngle),
+    Math.sin(angle) * Math.cos(elevationAngle),
+    Math.sin(elevationAngle)
+).normalize();
+
+point.position.copy(position);
+scene.add(point);
+let directionVector = new THREE.ArrowHelper(
+    direction,
+    position,
+    1,
+    0xff00ff
+);
+scene.add(directionVector);
+
+let velocity = direction.clone().multiplyScalar(2);
 
 setTimeout(() => {
-    rotate_mesh(circle, 'x', 90, 3000);
-    setTimeout(() => {
-        resize_mesh(circle, 0.5, 3000);
-    });
-}, 2000);
+    translateMesh(point, velocity, 5000);
+}, 1500);
