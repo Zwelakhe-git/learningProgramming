@@ -4,7 +4,7 @@ before begining the file send sequence:
     "User-Agent": "MySpider/1.0",//or any other user agent,
     "Accept" "application/json",
     "Accept-Language" "ru, ru-RU",
-    "Content-Type": "multipart/form-data; boundary=--boundaryName",
+    "Content-Type": "multipart/form-data; boundary=boundaryName",
 }
 ```
 
@@ -18,7 +18,8 @@ boundaryName
 bytes
 */
 try(PrintStream out = new PrintStream(mew BufferedOutputStream(conn.getOutputStream()), false, StandarCharsets.UTF_8)){
-    out.print(String.format("Content-Disposition: form-data; name=\"%s\"; filename=\"%s\"\n", formFieldName, filename));
+    out.print(String.format("--%s", boundary));
+    out.print(String.format("Content-Disposition: form-data; name=\"%s\"; filename=\"%s\"\r\n", formFieldName, filename));
     out.print(String.format("Content-Type: %s\n\n", contentType));
     out.write(bytes);
     out.print("\n--boundaryName--");
