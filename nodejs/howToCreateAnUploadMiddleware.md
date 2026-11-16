@@ -8,11 +8,30 @@ dependencies
 }
 ```
 
+## CJS imports
+
 ```js
 const multer = require("multer")
 const path = require("path")
 const fs = require("fs")
 const { v4: uuidv4 } = require("uuid");
+```
+
+
+
+## ESM imports
+
+```js
+import multer from "multer";
+import path from "node:path";
+import fs from "node:fs";
+import { v4 as uuidv4 } from "uuid"
+```
+
+
+
+```js
+
 
 const uploadsDir = path.join(__dirname, "path/to/uploads/folder/relative/to/current/file/parent")
 
@@ -47,7 +66,12 @@ const upload = multer({
 module.exports = upload;
 ```
 
-### usage
+
+
+## usage
+
+### cjs
+
 ```js
 const express = require("express");
 const router = express.Router();
@@ -56,7 +80,19 @@ const upload = require("./middleware/upload");
 router.post('/upload', upload.single('form_fieldname'), endpoint_handler);
 ```
 
+### esm
+
+```js
+import express from "express";
+import upload from "./middleware/upload.js";
+
+const router = express.Router();
+```
+
+
+
 ### how the handler gets the data
+
 ```js
 async function enpoint_handler(req, res){
   try {

@@ -1,6 +1,7 @@
 ```python
 import shutil
 from pathlib import Path
+from fastapi import UploadFile, File
 
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
